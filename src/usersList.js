@@ -16,11 +16,14 @@ export default class UsersList extends React.Component {
             method: 'GET',
             mode: 'cors',
             headers: {
-                Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyZXN1bHRzIjpbeyJJZCI6MSwiTmFtZSI6Im1pa2UiLCJMb2dpbiI6Im1pa2UiLCJQYXNzd29yZCI6Imdvb2RQYXNzNCJ9XSwiaWF0IjoxNjAxOTk4Nzc1fQ.qjaN7regnWE0wYW7NoiWuLqe19OKkfu7FdGt3w-T3x4`
+                Authorization: `Bearer ${localStorage.token}`
             }
         })
             .then(res => res.json())
-            .then(res => this.setState({ users: res }));
+            .then(res => {
+                if (res.message) this.setState({ users: [{ Id: 'Отказано', Name: 'Отказано', Login: 'Отказано' }] })
+                else this.setState({ users: res });
+            })
     }
 
     render() {
